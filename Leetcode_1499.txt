@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int findMaxValueOfEquation(vector<vector<int>>& points, int k) {
+//         long int r = points.size();
+//         int c = points[0].size();
+//         long long int sum = INT_MIN;
+//         long long int sum_y=0,sum_x=0;
+//         long long int sum_max = INT_MIN;
+//         cout<<points.size();
+//         for (int i =0; i<r;i++)
+//         {
+//             for(int j=i+1;j<r;j++){
+//         sum_x = abs(points[i][0]-points[j][0]);
+//         sum_y = points[i][1] + points[j][1]  ;
+//         if(sum_x <=k){
+//             sum = sum_x + sum_y;
+//             if(sum > sum_max){
+//                 sum_max = sum;
+//             }
+//         }
+//         sum = INT_MIN;
+//             }
+
+//         }
+// return sum_max;
+
+    int ans = INT_MIN;
+    priority_queue<pair<int,int>> p;
+    int n = points.size();
+    for(int i = 0;i<n;i++){
+        while((!p.empty())&&((points[i][0]-p.top().second)>k)){
+            p.pop(); // poping out all the elements which are greater that the given conditon 
+        }
+        if(!p.empty()){ //if after while loop still queue is not empty then we can get answer from top element of priority queue
+            ans = max(ans,(points[i][0]+points[i][1] +p.top().first));
+        }
+        p.push({points[i][1] - points[i][0],points[i][0]}); //pushing elements into the queue for the future use
+
+
+    }
+    return ans;
+
+
+    }
+};
+
+
+
+
