@@ -1,0 +1,62 @@
+class Solution {
+public:
+    long long maxStrength(std::vector<int>& nums) {
+    std::vector<int> p;
+    std::vector<int> n;
+    long long wholemax=0;
+        
+           long long max1 = 1; 
+    int n1 = nums.size();
+    for (int i = 0; i < n1; i++) {
+        if (nums[i] > 0) {
+            p.push_back(nums[i]);
+        } else if (nums[i] < 0) {
+            n.push_back(nums[i]);
+        }
+    }
+    int p1 = p.size();
+    long long prod = 1; // Renamed 'max' to 'prod' to avoid naming conflict
+    for (int i = 0; i < p1; i++) {
+        prod *= p[i];
+    }
+    int n2 = n.size();
+        
+   if(n2 != 0){
+        
+        
+ // Initialize to 1 instead of using conditional statement
+    if (n2 % 2 == 0) {
+        for (int i = 0; i < n2; i++) {
+            max1 *= n[i];
+        }
+    } else {
+        std::sort(n.begin(), n.end());
+        for (int i = 0; i < n2 - 1; i++) {
+            max1 *= n[i];
+        }
+    }
+       
+      if (p.empty() && n2 == 1 && n1 != 1) {
+        wholemax = 0;
+        return wholemax;
+    } else if (n1 == 1) {
+        wholemax = n[0];
+        return wholemax;
+    }   
+       
+       
+       
+       
+   }
+        
+        if(n.size() == 0 && p.size() == 0){
+            
+            return nums[0];
+        }
+  
+  //cout<<max1<<" " <<prod<<endl;
+    wholemax = prod * max1;
+    return wholemax;
+        
+    }
+};
