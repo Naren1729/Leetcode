@@ -1,0 +1,30 @@
+class Solution {
+public:
+
+
+    void fuc(int cc,int oc,int n,vector<string>& v,string s){
+
+
+        if(oc == n && cc == n){
+            v.push_back(s);
+            return;
+        }
+        if(oc<n){
+            fuc(cc,oc+1,n,v,s+'(');
+        }
+        if(cc<oc){
+            fuc(cc+1,oc,n,v,s+')');
+        }
+    }
+
+
+
+    vector<string> generateParenthesis(int n) {
+        
+        vector<string> v;
+        int cc=0,oc=0;
+         fuc(cc,oc,n,v,"");
+        return v;
+
+    }
+};
