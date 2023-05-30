@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int distance(vector<int>& a, vector<int>& b ){
+        int x1 = a[0];
+        int x2 = b[0];
+        int y1 = a[1];
+        int y2 = b[1];
+
+int result = (pow((x2-x1),2) + pow((y2-y1),2));
+
+return result;
+
+
+
+
+    }
+
+
+    bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
+
+        unordered_map<int,int> m ;
+        int a1 = distance(p1,p2);
+        m[a1]++;
+        int a2 = distance(p1,p3);
+        m[a2]++;
+        int a3 = distance(p1,p4);
+        m[a3]++;
+        int a4 = distance(p2,p3);
+        m[a4]++;
+        int a5 = distance(p2,p4);
+        m[a5]++;
+        int a6 = distance(p3,p4);
+        m[a6]++;
+
+        if(m.size() != 2){
+            return 0;
+        }
+        for(auto i:m){
+            if(i.first == 0){
+                return 0;
+            }
+            return i.second == 4 || i.second ==2;
+        }
+
+
+return 0;
+
+
+        
+    }
+};
