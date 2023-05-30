@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int missing = 0;
+        int n = nums.size();
+        int i = 0;
+        for( i = 0;i<n;i++){
+            if(nums[i] != i){
+                missing =i;
+                break;
+            }
+
+        }
+        if( i == n && missing == 0){
+            return n;
+        }
+        else{
+            return missing;
+        }
+        return 0;
+    }
+};
