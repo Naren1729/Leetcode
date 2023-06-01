@@ -1,0 +1,56 @@
+class Solution {
+public:
+
+    int jumps(vector<int>& nums, int n ){
+
+        // int res = INT_MAX;
+        vector<int> v(n,INT_MAX);
+        v[0] = 0;
+
+
+
+
+        //  if(n==1){
+        //         return 0;
+        //     }
+        // for(int i = 0;i<=n-2;i++){
+
+        //     if(i+nums[i]  >= n-1){
+        //         int subres = jumps(nums,i+1);
+        //         if(subres != INT_MAX){
+        //             res = min(res,subres+1);
+        //         }
+        //     }
+
+            for(int i = 1;i<n;i++){
+                for(int j = 0;j<i;j++){
+
+                    if(j+nums[j] >= i){
+                        if(v[j] != INT_MAX){
+                            v[i] = min(v[i],v[j]+1);
+                        }
+                    }
+                }
+            }
+
+//we are creating a table of length of n 
+//then we are checking till length i how many minimum jumps it can take 
+// after that we are updating v[i] that is the table value of i 
+//at last we are returning the last value of table
+
+    //    }
+
+// return res;
+                return v[n-1];
+
+
+    }
+
+
+    int jump(vector<int>& nums) {
+
+        int n = nums.size();
+        return jumps(nums,n);
+        
+    }
+};
