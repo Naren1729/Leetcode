@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int nof(vector<int>& coins,int amout,int n){
+
+        vector<int> res(amout+1,INT_MAX);
+        res[0] = 0;
+        for(int i =0;i<=amout;i++){
+            for(int j = 0;j<n;j++){
+
+                if(coins[j]<=i){
+                    int subres = res[i - coins[j]];
+                    if(subres != INT_MAX){
+                        res[i] = min(subres+1,res[i]);
+                    } 
+                }
+
+
+
+            }
+        }
+        // for(int i = 0;i<res.size();i++){
+        //     cout<<res[i]<<endl;
+        // }
+        return res[amout];
+    }
+
+
+    int coinChange(vector<int>& coins, int amount) {
+
+        int n = coins.size();
+        int res = nof(coins,amount,n);
+        if(res != INT_MAX){
+            return res;
+        }
+        return -1;
+        
+    }
+};
+
+
+
+
+used tabulation in dynamic programming to solve this probelm 
+
+table of amout length is being created 
+
+and checking the precious values to solve this problem 
