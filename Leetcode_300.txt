@@ -1,0 +1,83 @@
+class Solution {
+public:
+
+    int lis(vector<int>&nums, int n  ){
+
+        vector<int> v(n,1);
+
+        v[0] = 1;
+        int k = 0;
+
+        for(int i = 0;i<n;i++){
+            v[i] = 1;
+            // k=0;
+
+            for(int j = 0;j<i;j++){
+                if(nums[j] < nums[i]){
+                    v[i] = max(v[i],v[j]+1);
+                    // k = v[i];
+                    // v[i] = -1;
+                    
+                }
+
+            }
+            // if(v[i] == -1){
+            //     v[i] = k + 1;
+            // }
+
+        }
+        int result = v[0];
+
+        for(int i = 0;i<n;i++){
+            result = max(result,v[i]);
+           // cout<<v[i]<<endl;
+        }
+        return result;
+
+
+
+
+    }
+
+    // using binary search we optimized the code
+
+    int list (vector<int>& nums, int n){
+
+        vector<int> tail(n);
+        int len = 1;
+        tail[0] = nums[0];
+        for(int i = 0;i<n;i++){
+            if(nums[i] > tail[len-1]){
+                tail[len] = nums[i];
+                len++;
+            }else{
+                int c = ceil(tail,0,len-1,nums[i]);
+                tail[c] = nums[i];
+            }
+        }
+        return len;
+    }
+
+    int ceil(vector<int>& tail , int l ,int r ,int x){
+        while(r>l){
+            int m = l + (r-l)/2 ;
+            if(tail[m] >= x){
+                r = m;
+            }else{
+                l = m+1;
+            }
+        }
+        return r;
+    }
+
+
+
+
+
+
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        return list(nums,n);
+        
+    }
+};
