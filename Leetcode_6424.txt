@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int semiOrderedPermutation(vector<int>& nums) {
+        
+    int n = nums.size();
+    int operations = 0;
+
+
+    int idxOne = -1, idxN = -1;
+    for (int i = 0; i < n; i++) {
+        if (nums[i] == 1)
+            idxOne = i;
+        if (nums[i] == n)
+            idxN = i;
+    }
+
+ 
+    while (idxOne > 0) {
+        swap(nums[idxOne], nums[idxOne - 1]);
+        idxOne--;
+        operations++;
+    }
+        idxN = -1;
+    for (int i = 0; i < n; i++) {
+       
+        if (nums[i] == n)
+            idxN = i;
+    }
+
+ 
+    while (idxN < n - 1) {
+        swap(nums[idxN], nums[idxN + 1]);
+        idxN++;
+        operations++;
+    }
+
+    return operations;
+        
+    }
+};
