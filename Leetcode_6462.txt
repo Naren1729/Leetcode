@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int minimizedStringLength(string s) {
+        unordered_set<char> set;
+        int n = s.size();
+        for(int i = 0;i<n;i++){
+            set.insert(s[i]);
+        }
+        return set.size();
+    }
+};
