@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool isFascinating(int n) {
+        int n1 = 2*n;
+        int n2 = 3*n;
+        string s1 = to_string(n1);
+        string s2 = to_string(n2);
+        string s3 = to_string(n);
+        s3 = s3 + s1 + s2;
+        unordered_set<char> set;
+        int m = s3.size();
+        if(m>9){
+            return false;
+        }
+        for(int i = 0;i<m;i++){
+            set.insert(s3[i]);
+        }
+        if (set.size() == 9 && set.find('0') == set.end()) {
+            return true;
+        }
+        return false;
+        
+        
+    }
+};
