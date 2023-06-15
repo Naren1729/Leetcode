@@ -1,0 +1,62 @@
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public:
+    string longestPalin (string s) {
+       if (s.empty())
+        return "";
+
+    int start = 0;
+    int maxLength = 1;
+
+    int n = s.length();
+    for (int i = 0; i < n; ++i) {
+        // Check for odd-length palindromes
+        int left = i;
+        int right = i;
+        while (left >= 0 && right < n && s[left] == s[right]) {
+            if (right - left + 1 > maxLength) {
+                maxLength = right - left + 1;
+                start = left;
+            }
+            --left;
+            ++right;
+        }
+
+        // Check for even-length palindromes
+        left = i;
+        right = i + 1;
+        while (left >= 0 && right < n && s[left] == s[right]) {
+            if (right - left + 1 > maxLength) {
+                maxLength = right - left + 1;
+                start = left;
+            }
+            --left;
+            ++right;
+        }
+    }
+
+    return s.substr(start, maxLength);
+    }
+};
+
+//{ Driver Code Starts.
+
+int main()
+{
+    int t; cin >> t;
+    while (t--)
+    {
+        string S; cin >> S;
+        
+        Solution ob;
+        cout << ob.longestPalin (S) << endl;
+    }
+}
+// Contributed By: Pranay Bansal
+
+// } Driver Code Ends
