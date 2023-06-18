@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int distanceTraveled(int mainTank, int at) {
+        if(mainTank < 5){
+            return mainTank*10;
+        }
+        int res=0;
+        int mt;
+        int att = at;
+        if(mainTank >= 5 && at >=1){
+            mt = mainTank;
+            int count = 0;
+            while(mt>0 ){
+                count++;
+                res = res + 10;
+                mt --;
+                if(count == 5){
+                   
+                    if(att>0){
+                         mt = mt + 1;
+                        att--;
+                    }//else{
+                       // break;
+                    //}
+                  //  att--;
+                    count = 0;
+                }
+                
+            }
+            
+            return res;
+        }
+        return mainTank;
+        
+    }
+};
