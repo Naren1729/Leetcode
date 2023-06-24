@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int n = nums.size();
+        int count =0;
+      //  vector<int> v;
+        for(int i = 0;i<n;i++){
+            if(nums[i] == val){
+                nums[i] = 52;
+                count++;
+            }
+            // else{
+            //     v.push_back(nums[i]);
+            // }
+        }
+        count = n - count;
+     //   n = v.size();
+        // for(int i = 0;i<n;i++){
+        //     nums[i] = v[i];
+        // }
+        sort(nums.begin(),nums.end());
+        return count;
+        
+    }
+};
