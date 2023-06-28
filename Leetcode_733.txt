@@ -1,0 +1,36 @@
+class Solution {
+public:
+
+
+    void solve(vector<vector<int>>& image, int sr, int sc, int color,int c2){
+        int n = image.size();
+        int m = image[0].size();
+        if(sr<0 || sc <0  || sr>n-1 || sc > m-1 ){
+            return;
+        }
+        if(image[sr][sc] == color){// || image[sr][sc] == 0){
+            return;
+        }
+        if(image[sr][sc] == c2){
+            image[sr][sc] =color;
+        }
+        if(image[sr][sc]!= color){
+            return;
+        }
+        solve(image,sr-1,sc,color,c2);
+        solve(image,sr+1,sc,color,c2);
+        solve(image,sr,sc-1,color,c2);
+        solve(image,sr,sc+1,color,c2);
+        return;
+    }
+
+
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int n = image[sr][sc];
+        solve(image,sr,sc,color,n);
+        return image;
+
+
+        
+    }
+};
