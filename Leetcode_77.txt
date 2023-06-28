@@ -1,0 +1,58 @@
+class Solution {
+public:
+//         vector<vector<int>> vex;
+
+//    void solve(vector<int>& v,int idx,int k){
+//         if(idx = v.size()-1 ){
+//             vector<int>vec;
+//             for(int i = 0;i<k;i++){
+//                 vec.push_back(v[i]);
+//             }
+//             vex.push_back(vec);
+//             return;
+//         }
+//         for(int i = idx;i<v.size()-1;i++){
+//             swap(v[i],v[idx]);
+//             solve(v,idx+1,k);
+//             swap(v[i],v[idx]);
+//         }
+//         return;
+//     }
+
+
+//     vector<vector<int>> combine(int n, int k) {
+
+//         vector<int>v;
+//         for(int i = 0;i<n;i++){
+//             v.push_back(i+1);
+//         }
+//         solve(v,0,k);
+//         return vex;
+        
+
+
+
+        
+        
+//     }
+std::vector<std::vector<int>> result;
+
+    void solve(std::vector<int>& current, int start, int n, int k) {
+        if (k == 0) {
+            result.push_back(current);
+            return;
+        }
+
+        for (int i = start; i <= n; ++i) {
+            current.push_back(i);
+            solve(current, i + 1, n, k - 1);
+            current.pop_back();
+        }
+    }
+
+    std::vector<std::vector<int>> combine(int n, int k) {
+        std::vector<int> current;
+        solve(current, 1, n, k);
+        return result;
+    }
+};
