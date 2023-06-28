@@ -1,0 +1,103 @@
+class Solution {
+public:
+
+    void DFS(vector<vector<int>>& grid,vector<vector<bool>>& visited,queue<pair<int,int>>& q,int i, int j){
+        if(i<0 || j<0 || i>=grid.size() || j>=grid[0].size() || visited[i][j] || grid[i][j] == 0){
+            return ;
+        }
+        visited[i][j] =true;
+        q.push({i,j});
+        DFS(grid,visited,q,i-1,j);
+        DFS(grid,visited,q,i+1,j);
+        DFS(grid,visited,q,i,j-1);
+        DFS(grid,visited,q,i,j+1);
+        return;
+
+    }
+    bool isValid(int i , int j , int n, int m){
+        if(i< 0|| j<0 || i>=n || j>=m){
+            return false;
+        }
+        return true;
+    }
+
+
+    int shortestBridge(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        vector<vector<bool>> visited(m,vector<bool> (n,false));
+        queue<pair<int,int>> q;
+        bool found = false;
+        for(int i = 0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j] == 1){
+                    DFS(grid,visited,q,i,j);
+                    found = true;
+                    break;
+                   // if(found) break;
+                }
+                
+            }
+            if(found == true){
+                break;
+            }
+        }
+        int step = 0;
+        while(q.empty() ==  false){
+            int s = q.size();
+            while(s-- > 0){
+                auto curr = q.front();
+                q.pop();
+                int i = curr.first;
+                int j = curr.second;
+                if(isValid(i-1,j,n,m) ==  true ){
+                    if(visited[i-1][j] == false){
+                        if(grid[i-1][j] == 1){
+                        return step;
+                    }
+                    q.push({i-1,j});
+                    visited[i-1][j] = true;
+                    }
+                    
+                }
+                if(isValid(i+1,j,n,m) ==  true ){
+                    if(visited[i+1][j] == false){
+                        if(grid[i+1][j] == 1){
+                        return step;
+                    }
+                    q.push({i+1,j});
+                    visited[i+1][j] = true;
+                    }
+                    
+                }
+                if(isValid(i,j-1,n,m) ==  true ){
+                    if(visited[i][j-1] == false){
+                        if(grid[i][j-1] == 1){
+                        return step;
+                    }
+                    q.push({i,j-1});
+                    visited[i][j-1] = true;
+                    }
+                    
+                }
+                if(isValid(i,j+1,n,m) ==  true ){
+                    if(visited[i][j+1] == false){
+                        if(grid[i][j+1] == 1){
+                        return step;
+                    }
+                    q.push({i,j+1});
+                    visited[i][j+1] = true;
+                    }
+                    
+                }
+
+            }
+            step++;
+        }
+        return -1;
+    }
+};
+
+// vector<vector<int>> dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+//first we are finding the complete island by doing DFS
+//in second case we are increaseing the island border by BFS apprach until it reachs the other islanf
