@@ -38,6 +38,10 @@ bool canWalk(vector<vector<int>>& cells,int row, int col, int day){
     }
     return false;
 }
+// using th binary sarch to optimize the search operations 
+// we are sending each day and and travesing from top to bottom
+//if we are unable till last row then it return false
+//otherwise return true
     int latestDayToCross(int row, int col, vector<vector<int>>& cells) {
         int n = cells.size();
         int left = 1;
