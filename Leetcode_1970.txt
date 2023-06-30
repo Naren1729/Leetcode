@@ -1,0 +1,62 @@
+class Solution {
+public:
+bool canWalk(vector<vector<int>>& cells,int row, int col, int day){
+    vector<vector<int>>v(row,vector<int> (col,0));
+    for(int i = 0;i<day;i++){
+        v[cells[i][0]-1][cells[i][1]-1] = 1;
+    }
+    queue<pair<int,int>> q;
+    for(int i = 0;i < col;i++){
+        if(v[0][i] ==  0){
+            q.push({0,i});
+            v[0][i] = 1;
+        }
+    }
+    int idx[] = {0,0,-1,+1};
+    int idy[] = {-1,+1,0,0};
+
+    while(q.empty() == false){
+        int x = q.front().first;
+        int y = q.front().second;
+        q.pop();
+        if(x == row -1){
+            return true;
+        }
+
+        for(int i = 0;i<4;i++){
+          int  p = x+ idx[i];
+          int r=  y + idy[i];
+            if(p<0 || r<0 || p==row || r ==col||v[p][r] == 1){
+                continue;
+            }
+            v[p][r] = 1;
+            q.push({p,r});
+
+
+        }
+        
+    }
+    return false;
+}
+    int latestDayToCross(int row, int col, vector<vector<int>>& cells) {
+        int n = cells.size();
+        int left = 1;
+        int right = n;
+        
+        int ans = 0;
+        while(left<=right){
+            int mid = left + (right-left)/2;
+            if(canWalk(cells,row,col,mid)){
+                left = mid +1;
+                ans = mid;
+
+            }
+            else{
+                right = mid-1;
+            }
+        }
+        return ans;
+        
+    }
+
+};
