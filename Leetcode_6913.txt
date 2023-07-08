@@ -1,0 +1,32 @@
+class Solution {
+public:
+    
+    int alternatingSubarray(vector<int>& nums) {
+        
+    int ans = -1;
+    int cur = 1;
+        int n=nums.size();
+
+    for(int i=0;i<n-1;i++){
+        int isIncre= nums[i+1]-nums[i];
+        int cur=-1;
+        if(isIncre==1){
+            for(int j=i+1;j<n-1;j++){
+                if(nums[j+1]-nums[j]==-isIncre){
+                    isIncre=-isIncre;
+                }else{
+                    cur=j;
+                    break;
+                }
+            }
+            if(cur==-1)cur=n-1;
+            ans=max(ans,cur-i+1);
+        }
+
+    }
+
+    return ans;
+    }
+
+
+};
