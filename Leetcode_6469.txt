@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> relocateMarbles(vector<int>& nums, vector<int>& moveFrom, vector<int>& moveTo) {
+unordered_map<int, bool> positions;
+    for (int num : nums) {
+        positions[num] = true;
+    }
+
+    int n = moveFrom.size();
+    for (int i = 0; i < n; i++) {
+        if(moveTo[i] == moveFrom[i]){
+            continue;
+        }
+        positions[moveTo[i]] = true;
+        positions.erase(moveFrom[i]);
+    }
+
+    vector<int> result;
+    for ( auto& entry : positions) {
+        result.push_back(entry.first);
+    }
+    sort(result.begin(), result.end());
+
+    return result;
+        
+    }
+};
