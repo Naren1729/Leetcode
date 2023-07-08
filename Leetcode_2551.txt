@@ -1,0 +1,20 @@
+class Solution {
+public:
+    long long putMarbles(vector<int>& w, int k) {
+        int n = w.size();
+        vector<int> pair;
+        long long int min = 0;
+        long long int max = 0;
+        for(int i = 0;i<n-1;i++){
+            pair.push_back(w[i]+w[i+1]);
+        }
+        sort(pair.begin(),pair.end());
+        for(int i = 0;i<k-1;i++){
+            min = min + pair[i];
+            max = max + pair[n-i-2];
+        }
+        return max - min;
+
+        
+    }
+};
