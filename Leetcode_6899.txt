@@ -1,0 +1,44 @@
+// class Solution {
+// public:
+//     int maximumJumps(vector<int>& nums, int target) {
+//         int n = nums.size();
+//         int curr = nums[0];
+//         int count = 0;
+//         for(int i = 1;i<n;i++){
+//             if(abs(nums[i] - curr) <=target){
+//                 curr = nums[i];
+//                 count++;
+//             }
+            
+//         }
+//         if(curr == nums[n-1]){
+//             return count;
+//         }
+//         return -1;
+        
+//     }
+// };
+class Solution {
+public:
+    int maximumJumps(vector<int>& nums, int target) {
+       int n = nums.size();
+    std::vector<int> dp(n, -1);
+    dp[0] = 0;
+
+    for (int i = 1; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (std::abs(nums[i] - nums[j]) <= target) {
+                if (dp[j] != -1) {
+                    if (dp[i] == -1) {
+                        dp[i] = dp[j] + 1;
+                    } else {
+                        dp[i] = std::max(dp[i], dp[j] + 1);
+                    }
+                }
+            }
+        }
+    }
+
+    return dp[n - 1];
+    }
+};
