@@ -1,0 +1,50 @@
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+	public:
+		string FirstNonRepeating(string A){
+		    // Code here
+		    unordered_map<char,int> mp;
+            queue<char> q;
+            string ans="";
+
+            for(char c: A)
+            {    
+                //1 increment the freq of each element from the queue
+                mp[c]++;
+
+                if(mp[c]==1) q.push(c); // if the element is unique then only push into q
+    
+                //2 remove repeating element from the front of the queue
+                while(!q.empty() && mp[q.front()]>1) q.pop();
+                
+                //3 store the # if no new non repeating element found
+                if(q.empty()) ans+='#';
+                
+                else ans+=q.front(); // if non repeating element found the push the first one
+            }
+            return ans;
+    
+
+
+		}
+
+};
+
+//{ Driver Code Starts.
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		string A;
+		cin >> A;
+		Solution obj;
+		string ans = obj.FirstNonRepeating(A);
+		cout << ans << "\n";
+	}
+	return 0;
+}
+// } Driver Code Ends
