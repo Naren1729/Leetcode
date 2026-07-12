@@ -1,0 +1,60 @@
+class Solution {
+    public int countCompleteComponents(int n, int[][] edges) {
+        List<List<Integer>> adjacent = new ArrayList<>();
+        for(int i =0;i<n;i++){
+            adjacent.add(new ArrayList<>());
+        }
+        for(int[] edge : edges){
+           adjacent.get(edge[0]).add(edge[1]);
+           adjacent.get(edge[1]).add(edge[0]);
+        }
+
+        boolean[] visited = new boolean[n];
+        int completeList = 0;
+
+        for(int i =0;i<n;i++){
+            if(!visited[i]){
+                int[] counts = new int[2];
+
+                bfs(i,adjacent,visited,counts);
+                int vertex = counts[0];
+                int edgecount = counts[1];
+
+                if(edgecount  == vertex*(vertex-1)){
+                    completeList++;
+                }
+            }
+        }
+return completeList;
+    }
+
+    private void bfs(int start,List<List<Integer>> adjacent, boolean[] visited, int[] counts ){
+        Queue<Integer> checksQueue = new LinkedList<>();
+        checksQueue.offer(start);
+        visited[start] = true;
+
+        while(!checksQueue.isEmpty()){
+            int curr = checksQueue.poll();
+            counts[0]++;
+            counts[1] = counts[1] + adjacent.get(curr).size();
+
+            for(int neighbour  : adjacent.get(curr)){
+                if(!visited[neighbour]){
+                    visited[neighbour] = true;
+                    checksQueue.offer(neighbour);
+                }
+                
+            }
+        }
+
+    }
+}
+
+
+here we need to find the complete iteams. and logic for complete iteams is nothing but each vertex in complete iteam shold be connecgted with each other
+. so if there are n vertices and they are connected with each other then no of edges = n(n-1)/2 . this is short form of (n-1)+(n-2).....
+
+
+now here i am doing bfs. before that i am creating list of lists which has all the neighbours. and then in bfs i am checking no of edges
+for everything . and using formula i am matcing for each complete item 
+
