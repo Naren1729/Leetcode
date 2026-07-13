@@ -1,0 +1,26 @@
+class Solution {
+    public List<Integer> sequentialDigits(int low, int high) {
+
+        List<Integer> result = new ArrayList<>();
+        String digits = "123456789";
+        
+        int minLength = String.valueOf(low).length();
+        int maxLength = String.valueOf(high).length();
+
+        for(int i = minLength;i<=maxLength;i++){
+            for(int start = 0; start<= 9-i;start++){
+                String slice = digits.substring(start,start+i);
+                int num = Integer.parseInt(slice);
+
+                if(num >= low && num <= high){
+                    result.add(num);
+                }
+            }
+        }
+
+        return result;
+        
+    }
+}
+
+we can directly create those number instead of checking all the numbers
