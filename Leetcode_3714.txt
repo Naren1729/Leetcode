@@ -1,0 +1,121 @@
+class Solution {
+    public int longestBalanced(String s) {
+        int max1 = calculateCase1(s);
+        int max2 = Math.max(calculateCase2(s, 'a', 'b'), 
+                   Math.max(calculateCase2(s, 'b', 'c'), calculateCase2(s, 'a', 'c')));
+        int max3 = calculateCase3(s);
+        
+        return Math.max(max1, Math.max(max2, max3));
+        
+    }
+
+    private int calculateCase1(String s){
+        int n = s.length();
+        int maxLen = 0;
+        int currentLen = 0;
+        for(int i = 0;i<n;i++){
+            if(i==0 || s.charAt(i) == s.charAt(i-1)){
+                currentLen++;
+            }else{
+                currentLen = 1;
+            }
+            maxLen = Math.max(currentLen,maxLen);
+        }
+        return maxLen;
+    }
+
+    private int calculateCase2(String s, char c1, char c2){
+        int n = s.length();
+        int maxLen = 0,i = 0;
+
+        while(i<n){
+            if(s.charAt(i) != c1 && s.charAt(i) != c2){
+                i++;
+                continue;
+            }
+
+            Map<Integer, Integer> map = new HashMap<>();
+
+            map.put(0,i-1);
+            int prefixSum = 0;
+            int j = i;
+
+            while(j<n && (s.charAt(j)== c1 || s.charAt(j) == c2)){
+                prefixSum += (s.charAt(j) == c1) ? 1 : -1;
+                if(map.containsKey(prefixSum)){
+                    maxLen = Math.max(maxLen,j - map.get(prefixSum));
+                }else{
+                    map.put(prefixSum,j);
+                }
+                j++;
+            }
+            i=j;
+
+        }
+        return maxLen;
+    }
+
+    private int calculateCase3(String s) {
+        int maxLen = 0;
+        int countA = 0, countB = 0, countC = 0;
+        
+        Map<String, Integer> map = new HashMap<>();
+        map.put("0,0", -1); 
+        
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == 'a') countA++;
+            else if (ch == 'b') countB++;
+            else if (ch == 'c') countC++;
+  
+            String key = (countA - countB) + "," + (countB - countC);
+            
+            if (map.containsKey(key)) {
+                maxLen = Math.max(maxLen, i - map.get(key));
+            } else {
+                map.put(key, i);
+            }
+        }
+        return maxLen;
+    }
+}
+
+Instead of thinking about code loops, imagine you are a quality inspector looking for the longest perfectly balanced package of candies containing only flavors 'a', 'b', and 'c'.
+
+A package is balanced if all the flavors inside it appear the exact same number of times. There are exactly three ways a package can be balanced, so the code splits its brain into three distinct assistants (Case 1, Case 2, and Case 3) and takes the biggest answer found.
+
+Assistant 1: The One-Flavor Specialist (calculateCase1)
+This is the simplest check. This assistant looks for the longest continuous streak of the exact same character (like "aaa").
+
+How it works: It walks from left to right. If the next character matches the previous one, it keeps counting 1, 2, 3.... The moment the character changes, it resets its counter back to 1.
+
+It records the longest unbroken streak it finds.
+
+Assistant 2: The Two-Flavor Duo (calculateCase2)
+This assistant checks for balanced windows using exactly two flavors (like just a and b, or just b and c). It treats one flavor as a step up (+1) and the other flavor as a step down (-1).
+
+The Metaphor: Imagine you start at a baseline altitude of 0. You step forward down a path. Every time you see an a, you take one step up a hill. Every time you see a b, you take one step down.
+
+The Memory Trick: You carry a notebook (HashMap). Every time you step onto a new altitude, you write down the first index where you reached that specific height.
+
+The Magic Moment: If you are walking along and notice your current altitude matches an altitude you wrote in your notebook earlier, it means your total steps up perfectly cancelled out your total steps down between those two points! You instantly calculate the distance between them.
+
+The code runs this assistant three times to check all combinations: (a, b), (b, c), and (a, c).
+
+Assistant 3: The Three-Flavor Trio (calculateCase3)
+This assistant looks for the longest window where all three flavors appear an equal number of times (like "abc" or "aabbcc").
+
+Instead of tracking steps up and down, it tracks the gaps between the flavor counts as it moves along.
+
+How it works: It walks left to right, maintaining a running tally of total as, bs, and cs seen so far.
+
+At every single step, it notes the relationship shape by calculating two numbers: (Count of A minus Count of B) and (Count of B minus Count of C). It glues these together into a key, like "1,0".
+
+The Magic Moment: If all three counts grow at the exact same rate, the gaps between them will stay completely frozen. The moment the assistant hits a gap pattern (like "1,0") that it already logged in its notebook earlier, math guarantees that a, b, and c all grew by the exact same amount since that past checkpoint. It calculates the length instantly.
+
+The Grand Finale
+After all three assistants finish checking the string from left to right using their notebooks, the main method (longestBalanced) compares their results:
+
+Java
+return Math.max(max1, Math.max(max2, max3));
+It picks the largest length found out of all the cases and returns it. Because the notebooks allow the assistants to look back in time instantly without re-checking individual substrings, the whole group finishes the entire inspection in just one smooth walk from left to right!
